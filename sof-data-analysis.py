@@ -1,24 +1,23 @@
 import csv
+from collections import defaultdict
 
 with open('data/survey_results_public.csv', encoding='utf8') as f:
     csv_reader = csv.DictReader(f)
 
-    yes_count = 0
-    no_count = 0
+    # count becomes default dictionary which knows to expect int as value to keys
+    counts = defaultdict(int)
 
     for line in csv_reader:
-        if line['Hobbyist'] == 'Yes':
-            yes_count += 1
-        elif line['Hobbyist'] == 'No':
-            no_count += 1
+        counts[line['Hobbyist']] += 1
 
-total = yes_count + no_count
+# Now Yes and No are in default dict as keys
+total = counts['Yes'] + counts['No']
 
-yes_pct = (yes_count / total) * 100
+yes_pct = (counts['Yes'] / total) * 100
 yes_pct = round(yes_pct, 2)
 
-no_pct = (no_count / total) * 100
+no_pct = (counts['No'] / total) * 100
 no_pct = round(no_pct, 2)
 
-print(yes_pct)
-print(no_pct)
+print(f'Yes is {yes_pct}%')
+print(f'Yes is {no_pct}%')
