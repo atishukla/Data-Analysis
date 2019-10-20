@@ -1,11 +1,11 @@
 import csv
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 with open('data/survey_results_public.csv', encoding='utf8') as f:
     csv_reader = csv.DictReader(f)
 
-    # count becomes default dictionary which knows to expect int as value to keys
-    counts = defaultdict(int)
+    # counter comes to rescue for things like counting and is intelligent as well
+    counts = Counter()
 
     for line in csv_reader:
         counts[line['Hobbyist']] += 1
@@ -19,5 +19,5 @@ yes_pct = round(yes_pct, 2)
 no_pct = (counts['No'] / total) * 100
 no_pct = round(no_pct, 2)
 
-print(f'Yes is {yes_pct}%')
-print(f'Yes is {no_pct}%')
+print(f'Yes: {yes_pct}%')
+print(f'No: {no_pct}%')
